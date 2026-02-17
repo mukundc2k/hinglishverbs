@@ -1,5 +1,7 @@
 <p align="center">
   <img src="assets/EACL2026_alt-logo_blue.png" alt="EACL 2026 Logo" height="80"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="assets/mbzuai-logo.webp" alt="MBZUAI Logo" height="80"/>
 </p>
 
 # Do LLMs Model Human Linguistic Variation? A Case Study in Hindi-English Verb Code-Mixing
