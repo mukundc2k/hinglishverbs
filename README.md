@@ -116,7 +116,7 @@ Questions about the data or methodology are welcome. If you use this dataset or 
 @inproceedings{wip,
   title     = {wip},
   author    = {Choudhary, Mukund and Jindal, Madhur and Aeron, Gaurja and Choudhury, Monojit},
-  booktitle = {eqcl},
+  booktitle = {eacl},
   year      = {2026},
 }
 ```
