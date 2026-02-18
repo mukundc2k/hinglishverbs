@@ -24,12 +24,12 @@ We ask: **do LLMs model human linguistic variation?** and test this on Hindi-Eng
 
 ## 📁 Repository Contents
 
-This repository releases the experimental data described in the paper. All files are in `main_data/`.
+This repository releases the experimental data, human, and LLM preferences, as described in the paper. All files are in `main_data/`.
 
 ### `verb_reliability_metrics.csv`
-**§ 4.2.2 · § 5.1** — *Per-verb inter-rater reliability for the 30 human-study verb pairs.*
+*Per-verb inter-rater reliability for the 30 human-study verb pairs.*
 
-30 rows (one per verb pair). Contains the mean rating, standard deviation, per-rater difficulty scores, rater IDs, percent exact agreement with the mode, and a Mann-Whitney U test p-value (`mt_pval`) for rating reliability. These are the 30 Hindi-English verb pairs selected for the human experiment via k-means stratification (§ 4.2.2) and used to define preference classes UN / HIP / ENP / MP (§ 5.1).
+30 rows (one per verb pair). Contains the mean rating, standard deviation, per-rater difficulty scores, anonymised rater IDs, percent exact agreement with the mode, and a Mann-Whitney U test p-value (`mt_pval`) for rating reliability. These are the 30 Hindi-English verb pairs selected for the human experiment via k-means stratification and used to define preference classes UN / HIP / ENP / MP.
 
 | Column | Description |
 |---|---|
@@ -46,9 +46,9 @@ This repository releases the experimental data described in the paper. All files
 ---
 
 ### `sentence_reliability_metrics.csv`
-**§ 4.2.3 · § 5.1** — *Per-sentence reliability for the 100 human-rated sentence pairs.*
+*Per-sentence reliability for the 100 human-rated sentence pairs.*
 
-100 rows (one per sentence pair; 30 verb pairs × up to 5 frames, subsetted). Contains item-level rating statistics and two reliability p-values: `sent_mt_pval` (sentence-level Mann-Whitney against uniform) and `verb_mt_pval` (verb-level reliability collapsed across frames). These support the inter-rater reliability analysis (ordinal Krippendorff's α = 0.365) and Monte Carlo uniformity test reported in § 5.1.
+100 rows (one per sentence pair; 30 verb pairs × up to 5 frames, subsetted to remove outliers). Contains item-level rating statistics and two reliability p-values: `sent_mt_pval` (sentence-level Mann-Whitney against uniform) and `verb_mt_pval` (verb-level reliability collapsed across frames). These support the inter-rater reliability analysis (ordinal Krippendorff's α = 0.365) and Monte Carlo uniformity test reported in § 5.1.
 
 | Column | Description |
 |---|---|
@@ -64,9 +64,9 @@ This repository releases the experimental data described in the paper. All files
 ---
 
 ### `merged_human_llm_data_with_sentence_reliability.csv`
-**§ 4.1.2 · § 4.2.3 · § 5** — *Main analysis table: human ratings merged with LLM perplexity ratios.*
+*Main analysis table: human ratings merged with LLM perplexity ratios.*
 
-300 rows (100 sentence pairs × 3 orthographic forms: Devanagari, Casual Latin, Formal Latin). This is the primary dataset used in all three experiments (§ 5.2–5.4). Each row links one sentence pair in one form to its human preference statistics (from `sentence_reliability_metrics`) and the perplexity ratio PR_θ(x_hi, x_en) from each of the 7 LLMs. Also includes preference class labels (DistClass / DistClassName: UN, HIP, ENP, MP) derived from the Monte Carlo test (§ 5.1).
+300 rows (100 sentence pairs × 3 orthographic forms: Devanagari, Casual Latin, Formal Latin). This is the primary dataset used in all three experiments. Each row links one sentence pair in one form to its human preference statistics (from `sentence_reliability_metrics`) and the perplexity ratio PR_θ(x_hi, x_en) from each of the 7 LLMs. Also includes preference class labels (DistClass/DistClassName: UN, HIP, ENP, MP) derived from the Monte Carlo test, as well as visual filtering of shape types.
 
 | Column | Description |
 |---|---|
@@ -75,7 +75,7 @@ This repository releases the experimental data described in the paper. All files
 | `verb`, `verb_en`, `verb_casual` | Verb forms |
 | `frame_en`, `frame_en_id` | Frame gloss and index |
 | `sent_mt_pval`, `verb_mt_pval` | Reliability p-values |
-| `DistClass`, `DistClassName` | Numeric and named preference class (§ 5.1) |
+| `DistClass`, `DistClassName` | Numeric and named preference class |
 | `translit` | Orthographic form (`devanagari` / `casual` / `formal`) |
 | `google_gemma-3-{1,4,12}b-pt` | PR_θ for Gemma-3 variants |
 | `meta-llama_Llama-3.1-{8,70}B` | PR_θ for Llama-3.1 variants |
@@ -85,9 +85,9 @@ This repository releases the experimental data described in the paper. All files
 ---
 
 ### `verbmap_with_perplexities_ratios_full_expanded.csv`
-**§ 3.1 · § 4.1.2** — *Full-scale perplexity ratios for all 4,279 verb pairs across 7 models × 15 conditions.*
+*Full-scale perplexity ratios for all 4,279 verb pairs across 7 models × 15 conditions.*
 
-4,207 rows (one per verb pair, after preprocessing; cf. 4,279 unique pairs from Indowordnet described in § 3.1). Each row contains a Hindi-English verb pair in all three transliterations, plus — for each of the 7 LLMs — the full array of 15 perplexity ratios (5 frames × 3 forms) and per-model summary statistics (min, max, mean, median, std, range). These 18-dimensional per-model feature vectors were used for k-means clustering to stratify the 30-verb human study sample (§ 4.2.2), and the 15-condition PR_θ values serve as features in Experiments 1, 2(a), and 2(b) (§ 5.2–5.4).
+4,207 rows (one per verb pair, after preprocessing; cf. 4,279 unique pairs from Indowordnet). Each row contains a Hindi-English verb pair in all three transliterations, plus the full array of 15 perplexity ratios (5 frames × 3 forms) and per-model (7) summary statistics (min, max, mean, median, std, range). These 18-dimensional per-model feature vectors were used for k-means clustering to stratify the 30-verb human study sample, and the 15-condition PR_θ value.
 
 | Column | Description |
 |---|---|
@@ -105,7 +105,6 @@ Models: `google_gemma-3-1b-pt`, `google_gemma-3-4b-pt`, `google_gemma-3-12b-pt`,
 ## 🤝 Contact
 
 Mukund Choudhary — [mukund.choudhary@mbzuai.ac.ae](mailto:mukund.choudhary@mbzuai.ac.ae)  
-Madhur Jindal — [madhur.jindal@mbzuai.ac.ae](mailto:madhur.jindal@mbzuai.ac.ae)
 
 Questions about the data or methodology are welcome. If you use this dataset or build on this work, we'd love to hear from you.
 
@@ -114,10 +113,10 @@ Questions about the data or methodology are welcome. If you use this dataset or 
 ## ✍️ Citation
 
 ```bibtex
-@inproceedings{choudhary2025llms,
-  title     = {Do {LLM}s Model Human Linguistic Variation? {A} Case Study in {H}indi-{E}nglish Verb Code-Mixing},
+@inproceedings{wip,
+  title     = {wip},
   author    = {Choudhary, Mukund and Jindal, Madhur and Aeron, Gaurja and Choudhury, Monojit},
-  booktitle = {Proceedings of the 17th Conference of the European Chapter of the Association for Computational Linguistics (EACL)},
+  booktitle = {eqcl},
   year      = {2026},
 }
 ```
